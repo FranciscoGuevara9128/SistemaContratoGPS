@@ -25,7 +25,7 @@ Optimizar la gestión de contratos GPS, garantizando trazabilidad entre cliente,
 
 1. Priscila Julieth Selva Flores
 2. Emma Cecilia Serrano Urroz
-3. Jeiny Lomari Orozco Chávez
+3. Jeyni Lomary Orozco Chávez
 4. Jan Carlo Páramo Gutiérrez
 5. Francisco Javier Guevara Aráuz
 
