@@ -14,35 +14,20 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 
-public class Cliente {
+public class Cliente extends Persona{
 
     @Id
     @Hidden
-    @GeneratedValue(generator = "Cliente_id")
-    @GenericGenerator(name = "Cliente_id", strategy = "uuid2")
-    private String Clienteid;
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid2")
+    private String clienteId;
 
-    @Column(name="nombreCliente", length = 60, nullable = false)
-    private String nombreCliente;
-
-    @Column(name="documento", length = 60, nullable = false)
-    @Size(min=8, max=60)
-    private String documento;
-
+    @Enumerated(EnumType.STRING)
     @Column(name="tipoCliente")
-    private String tipoCliente;
+    private TipoCliente tipoCliente;
 
-    @Column(name="telefono")
-    private int telefono;
-
-    @Column(name="email", length = 60, nullable = false)
-    private String email;
-
-    @Column(name="direccion", length = 100, nullable = false)
-    private String direccion;
-
-    @Column (name="activo")
-    private boolean activo;
+    @Column(name="activo", columnDefinition = "BOOLEAN DEFAULT TRUE")
+    private boolean activo = true;
 
     @Column (name="fechaRegistro")
     private LocalDateTime fechaRegistro;

@@ -21,4 +21,7 @@ public abstract class Persona {
 
     @Column(name="email", length = 60)
     protected String email;
+
+    @Column(name="direccion", length = 100, nullable = false)
+    private String direccion;
 }
