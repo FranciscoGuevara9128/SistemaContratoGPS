@@ -19,7 +19,7 @@ public class Vehiculo {
     @Id
     @Hidden
     @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name="vehiculo_id", strategy = "uuid2")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid2")
     private String vehiculo_id;
 
     @Column(name="placa", length = 60, nullable = false)

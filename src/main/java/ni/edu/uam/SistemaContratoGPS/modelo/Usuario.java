@@ -18,7 +18,7 @@ public class Usuario extends Persona{
     @Id
     @Hidden
     @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name="usuario_id", strategy = "uuid2")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid2")
     private String usuario_id;
 
     @Column(name="nombreUsuario", length = 60, nullable = false)
@@ -28,13 +28,13 @@ public class Usuario extends Persona{
     @Size(min=8, max=60)
     private String contrasenia;
 
+    @Enumerated(EnumType.STRING)
     @Column(name="rol")
-    private String rol;
+    private TipoUsuario rol;
 
-    @Column(name="estado")
-    private String estado;
+    @Column(name="activo", columnDefinition = "BOOLEAN DEFAULT TRUE")
+    private boolean activo = true;
 
     @Column(name="fechaRegistro")
-    @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime fechaRegistro;
 }
