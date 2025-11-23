@@ -27,8 +27,16 @@ public class Cliente extends Persona{
     private TipoCliente tipoCliente;
 
     @Column(name="activo", columnDefinition = "BOOLEAN DEFAULT TRUE")
-    private boolean activo = true;
+    private Boolean activo = true;
 
     @Column (name="fechaRegistro")
+    @Hidden
     private LocalDateTime fechaRegistro;
+
+    @PrePersist
+    protected void onCreate() {
+        if (this.fechaRegistro == null) {
+            this.fechaRegistro = LocalDateTime.now();
+        }
+    }
 }

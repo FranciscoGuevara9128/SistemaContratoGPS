@@ -64,7 +64,15 @@ public class Contrato {
     private Usuario creadoPor;
 
     @Column(name="fecha_creacion", nullable = false)
+    @Hidden
     private LocalDateTime fechaCreacion;
+
+    @PrePersist
+    protected void onCreate() {
+        if (this.fechaCreacion == null) {
+            this.fechaCreacion = LocalDateTime.now();
+        }
+    }
 
     @Column(name="activo", nullable = false, columnDefinition = "boolean default true")
     private Boolean activo;
