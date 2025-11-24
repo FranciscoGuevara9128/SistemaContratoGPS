@@ -26,8 +26,10 @@ public class Cliente extends Persona{
     @Column(name="tipoCliente")
     private TipoCliente tipoCliente;
 
-    @Column(name="activo", columnDefinition = "BOOLEAN DEFAULT TRUE")
-    private Boolean activo = true;
+    @Column(name = "activo", nullable = false)
+    @Required
+    @DefaultValueCalculator(value = TrueCalculator.class)
+    private Boolean activo;
 
     @Column (name="fechaRegistro")
     @Hidden

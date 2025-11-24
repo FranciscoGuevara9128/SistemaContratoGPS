@@ -46,6 +46,8 @@ public class Vehiculo {
     @Column(name="color", length = 30, nullable = false)
     private String color;
 
-    @Column(name="activo", nullable = false, columnDefinition = "boolean default true")
+    @Column(name = "activo", nullable = false)
+    @Required
+    @DefaultValueCalculator(value = TrueCalculator.class)
     private Boolean activo;
 }
