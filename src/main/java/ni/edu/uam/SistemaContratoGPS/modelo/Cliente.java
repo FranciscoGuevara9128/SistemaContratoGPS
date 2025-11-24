@@ -3,14 +3,19 @@ package ni.edu.uam.SistemaContratoGPS.modelo;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
+import org.openxava.annotations.DefaultValueCalculator;
 import org.openxava.annotations.Hidden;
+import org.openxava.annotations.Required;
+import org.openxava.calculators.TrueCalculator;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name="cliente")
+@Table( name="cliente",
+        uniqueConstraints = @UniqueConstraint(columnNames = "documento")
+)
 @Getter
 @Setter
 

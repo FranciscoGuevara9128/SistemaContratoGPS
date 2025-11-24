@@ -4,14 +4,19 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Columns;
 import org.hibernate.annotations.GenericGenerator;
+import org.openxava.annotations.DefaultValueCalculator;
 import org.openxava.annotations.Hidden;
+import org.openxava.annotations.Required;
+import org.openxava.calculators.TrueCalculator;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name="usuario")
+@Table( name="usuario",
+        uniqueConstraints = @UniqueConstraint(columnNames = "documento")
+)
 @Getter
 @Setter
 public class Usuario extends Persona{
