@@ -32,6 +32,8 @@ public class Plan {
     @Column(name="descripcion", length = 200)
     private String descripcion;
 
-    @Column(name="activo", nullable = false, columnDefinition = "boolean default true")
+    @Column(name = "activo", nullable = false)
+    @Required
+    @DefaultValueCalculator(value = TrueCalculator.class)
     private Boolean activo;
 }

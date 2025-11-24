@@ -74,6 +74,8 @@ public class Contrato {
         }
     }
 
-    @Column(name="activo", nullable = false, columnDefinition = "boolean default true")
+    @Column(name = "activo", nullable = false)
+    @Required
+    @DefaultValueCalculator(value = TrueCalculator.class)
     private Boolean activo;
 }
