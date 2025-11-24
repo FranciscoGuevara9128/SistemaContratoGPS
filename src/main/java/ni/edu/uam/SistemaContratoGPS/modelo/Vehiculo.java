@@ -43,8 +43,8 @@ public class Vehiculo {
     @Column(name = "modelo", length = 30, nullable = false)
     private String modelo;
 
-    @Column(name = "año", nullable = false)
-    @Min(message = "El año no puede ser menor a 1900", value = 1900)
+    @Column(name = "aÃ±o", nullable = false)
+    @Min(message = "El aÃ±o no puede ser menor a 1900", value = 1900)
     private Integer anio;
 
     @Column(name = "color", length = 30, nullable = false)

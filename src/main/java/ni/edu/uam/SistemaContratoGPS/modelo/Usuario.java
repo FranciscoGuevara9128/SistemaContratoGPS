@@ -19,22 +19,32 @@ public class Usuario extends Persona{
     @Hidden
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid2")
-    private String usuario_id;
+    private String usuarioId;
 
     @Column(name="nombreUsuario", length = 60, nullable = false)
     private String nombreUsuario;
 
-    @Column(name="contrasenia", length = 60, nullable = false)
-    @Size(min=8, max=60)
+    @Column(name="contrasenia", length = 20, nullable = false)
+    @Size(min=8, max=20)
     private String contrasenia;
 
     @Enumerated(EnumType.STRING)
     @Column(name="rol")
     private TipoUsuario rol;
 
-    @Column(name="activo", columnDefinition = "BOOLEAN DEFAULT TRUE")
-    private boolean activo = true;
+    @Column(name = "activo", nullable = false)
+    @Required
+    @DefaultValueCalculator(value = TrueCalculator.class)
+    private Boolean activo;
 
     @Column(name="fechaRegistro")
+    @Hidden
     private LocalDateTime fechaRegistro;
+
+    @PrePersist
+    protected void onCreate() {
+        if (this.fechaRegistro == null) {
+            this.fechaRegistro = LocalDateTime.now();
+        }
+    }
 }
