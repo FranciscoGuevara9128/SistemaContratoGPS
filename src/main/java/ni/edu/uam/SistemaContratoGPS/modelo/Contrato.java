@@ -4,7 +4,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
+import org.openxava.annotations.DefaultValueCalculator;
 import org.openxava.annotations.Hidden;
+import org.openxava.annotations.Required;
+import org.openxava.calculators.TrueCalculator;
 import org.openxava.jpa.XPersistence;
 
 import javax.persistence.*;
@@ -71,13 +74,6 @@ public class Contrato {
     @Column(name="fecha_creacion", nullable = false)
     @Hidden
     private LocalDateTime fechaCreacion;
-
-    @PrePersist
-    protected void onCreate() {
-        if (this.fechaCreacion == null) {
-            this.fechaCreacion = LocalDateTime.now();
-        }
-    }
 
     @Column(name = "activo", nullable = false)
     @Required

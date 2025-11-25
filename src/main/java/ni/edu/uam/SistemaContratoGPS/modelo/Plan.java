@@ -4,8 +4,10 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 import org.openxava.annotations.Hidden;
-
+import org.openxava.annotations.Required;
+import org.openxava.calculators.TrueCalculator;
 import javax.persistence.*;
+import org.openxava.annotations.DefaultValueCalculator;
 
 @Entity
 @Table(name="planes")
