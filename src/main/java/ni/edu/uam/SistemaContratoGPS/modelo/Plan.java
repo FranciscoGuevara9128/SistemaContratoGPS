@@ -9,6 +9,8 @@ import org.openxava.calculators.TrueCalculator;
 import javax.persistence.*;
 import org.openxava.annotations.DefaultValueCalculator;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name="planes")
 @Getter
@@ -35,7 +37,14 @@ public class Plan {
     private String descripcion;
 
     @Column(name = "activo", nullable = false)
-    @Required
+    @Hidden
     @DefaultValueCalculator(value = TrueCalculator.class)
     private Boolean activo;
+
+    @PrePersist
+    protected void onCreate() {
+        if (this.activo == null) {
+            this.activo = true;
+        }
+    }
 }
