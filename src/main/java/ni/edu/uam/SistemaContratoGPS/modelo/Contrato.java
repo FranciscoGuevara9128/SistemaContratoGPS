@@ -35,11 +35,11 @@ public class Contrato {
     private Cliente cliente;
 
     @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="vehiculo_id", nullable = false)
+    @JoinColumn(name="vehiculo_id", nullable = false, unique = true)
     private Vehiculo vehiculo;
 
     @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="dispositivo_gps_id", nullable = false)
+    @JoinColumn(name="dispositivo_gps_id", nullable = false, unique = true)
     private DispositivoGPS dispositivoGPS;
 
     @ManyToOne(fetch=FetchType.LAZY)
