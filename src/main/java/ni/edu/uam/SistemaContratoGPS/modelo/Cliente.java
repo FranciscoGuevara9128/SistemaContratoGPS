@@ -45,5 +45,8 @@ public class Cliente extends Persona{
         if (this.fechaRegistro == null) {
             this.fechaRegistro = LocalDateTime.now();
         }
+        if (this.activo == null) {
+            this.activo = true;
+        }
     }
 }

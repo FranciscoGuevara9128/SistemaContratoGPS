@@ -38,7 +38,7 @@ public class Usuario extends Persona{
     private TipoUsuario rol;
 
     @Column(name = "activo", nullable = false)
-    @Required
+    @Hidden
     @DefaultValueCalculator(value = TrueCalculator.class)
     private Boolean activo;
 
@@ -50,6 +50,9 @@ public class Usuario extends Persona{
     protected void onCreate() {
         if (this.fechaRegistro == null) {
             this.fechaRegistro = LocalDateTime.now();
+        }
+        if (this.activo == null) {
+            this.activo = true;
         }
     }
 }

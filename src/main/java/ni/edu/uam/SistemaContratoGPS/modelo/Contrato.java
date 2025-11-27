@@ -76,7 +76,7 @@ public class Contrato {
     private LocalDateTime fechaCreacion;
 
     @Column(name = "activo", nullable = false)
-    @Required
+    @Hidden
     @DefaultValueCalculator(value = TrueCalculator.class)
     private Boolean activo;
 
@@ -129,6 +129,9 @@ public class Contrato {
     protected void onCreate() {
         if (this.fechaCreacion == null) {
             this.fechaCreacion = LocalDateTime.now();
+        }
+        if (this.activo == null) {
+            this.activo = true;
         }
 
         // Evento de creación (se guarda por cascade)

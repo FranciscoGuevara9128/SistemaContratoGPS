@@ -8,6 +8,7 @@ import org.openxava.calculators.TrueCalculator;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
+import java.time.LocalDateTime;
 import java.util.Collection;
 
 @Entity
@@ -55,7 +56,15 @@ public class Vehiculo {
     private Collection<ImagenVehiculo> imagenes;
 
     @Column(name = "activo", nullable = false)
-    @Required
-    @DefaultValueCalculator(value = TrueCalculator.class)
+    @DefaultValueCalculator(TrueCalculator.class)
+    @Hidden
     private Boolean activo;
+
+    @PrePersist
+    protected void onCreate() {
+        if (this.activo == null) {
+            this.activo = true;
+        }
+    }
+
 }
