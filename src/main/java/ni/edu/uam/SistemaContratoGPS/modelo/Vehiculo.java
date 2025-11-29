@@ -28,28 +28,34 @@ public class Vehiculo {
     @GenericGenerator(name = "system-uuid", strategy = "uuid2")
     private String vehiculoId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cliente_id")
-    private Cliente cliente;
-
     @Column(name = "placa", length = 12, nullable = false, unique = true)
+    @Required
     private String placa;
 
     @Column(name = "vin", length = 30, nullable = false, unique = true)
+    @Required
     private String vin;
 
     @Column(name = "marca", length = 30, nullable = false)
+    @Required
     private String marca;
 
     @Column(name = "modelo", length = 30, nullable = false)
+    @Required
     private String modelo;
 
     @Column(name = "año", nullable = false)
+    @Required
     @Min(message = "El año no puede ser menor a 1900", value = 1900)
     private Integer anio;
 
     @Column(name = "color", length = 30, nullable = false)
+    @Required
     private String color;
+
+    @Column(name="propietario", length = 100, nullable = false)
+    @Required
+    private String propietario;
 
     @OneToMany
     @ListProperties("archivo")

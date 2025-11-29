@@ -32,7 +32,7 @@ public class Cliente extends Persona{
     private TipoCliente tipoCliente;
 
     @Column(name = "activo", nullable = false)
-    @Required
+    @Hidden
     @DefaultValueCalculator(value = TrueCalculator.class)
     private Boolean activo;
 

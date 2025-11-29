@@ -36,4 +36,11 @@ public class DispositivoGPS {
 
     @Column(name="fechaAlta", nullable = false)
     private LocalDateTime fechaAlta;
+
+    @PrePersist
+    protected void onCreate() {
+        if (this.fechaAlta == null) {
+            this.fechaAlta = LocalDateTime.now();
+        }
+    }
 }

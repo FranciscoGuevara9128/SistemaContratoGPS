@@ -27,13 +27,16 @@ public class Usuario extends Persona{
     private String usuarioId;
 
     @Column(name="nombreUsuario", length = 60, nullable = false)
+    @Required
     private String nombreUsuario;
 
     @Column(name="contrasenia", length = 20, nullable = false)
+    @Required
     @Size(min=8, max=20)
     private String contrasenia;
 
     @Enumerated(EnumType.STRING)
+    @Required
     @Column(name="rol")
     private TipoUsuario rol;
 
