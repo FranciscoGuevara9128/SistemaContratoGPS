@@ -24,13 +24,16 @@ public class Plan {
     private String clienteId;
 
     @Column(name="nombre", length = 30, nullable = false)
+    @Required
     private String nombre;
 
     @Enumerated(EnumType.STRING)
-    @Column(name="tipo_plan")
+    @Column(name="tipo_plan", nullable = false)
+    @Required
     private Periodicidad tipoPlan;
 
     @Column(name="precio_base", nullable = false)
+    @Required
     private Double precioBase;
 
     @Column(name="descripcion", length = 200)
