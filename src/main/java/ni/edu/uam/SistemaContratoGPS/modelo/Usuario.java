@@ -7,6 +7,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.openxava.annotations.DefaultValueCalculator;
 import org.openxava.annotations.Hidden;
 import org.openxava.annotations.Required;
+import org.openxava.annotations.View;
 import org.openxava.calculators.TrueCalculator;
 
 import javax.persistence.*;
@@ -19,6 +20,12 @@ import java.time.LocalDateTime;
 )
 @Getter
 @Setter
+@View(
+        members=
+                "nombre, documento, telefono, email;" +
+                        "direccion;" +
+                "nombreUsuario, contrasenia, rol;"
+)
 public class Usuario extends Persona{
     @Id
     @Hidden

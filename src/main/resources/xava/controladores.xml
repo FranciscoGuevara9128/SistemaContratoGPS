@@ -2,23 +2,25 @@
 
 <!DOCTYPE controladores SYSTEM "dtds/controladores.dtd">
 
+
 <controladores>
-    
-    <!-- Variable de entorno: 
-    <var-entorno nombre="SistemaContratoGPS_ANYO_DEFECTO" valor="2015"/>
-    -->
-    
-    <!-- Objeto de sesión:
-    <Objeto nombre="SistemaContratoGPS_anyoActivo" clase="java.lang.Integer" valor="2015" 
-            ambito="global"/>
-    -->
-    
-    <!-- Controlador:
-    <controlador nombre="Profesor">
+
+    <controlador nombre="Vehiculo">
         <hereda-de controlador="Typical"/>
-        <accion nombre="new" icono="library-plus" atajo-de-teclado="Control N" 
-                clase="acciones.CrearProfesor"/>        
+        <accion nombre="Vehiculos por Año" icono="printer" modo = "list"
+                clase="ni.edu.uam.SistemaContratoGPS.actions.PrintVehiclesByYear"/>
     </controlador>
-    -->
-    
+
+    <controlador nombre="Contrato">
+        <hereda-de controlador="Typical"/>
+        <accion nombre="Contratos Por Vencer / Vencidos" icono="printer" modo = "list"
+                clase="ni.edu.uam.SistemaContratoGPS.actions.PrintReporteContratosVencimiento"/>
+        <accion nombre="Contratos Por Plan" icono="printer" modo = "list"
+                clase="ni.edu.uam.SistemaContratoGPS.actions.PrintContratosPorPlan"/>
+        <accion nombre="Top 10 Clientes" icono="account" modo = "list"
+                clase="ni.edu.uam.SistemaContratoGPS.actions.PrintTop10ClientesContratos"/>
+    </controlador>
+
 </controladores>
+
+
