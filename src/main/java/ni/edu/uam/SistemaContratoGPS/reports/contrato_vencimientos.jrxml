@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport
+        xmlns="http://jasperreports.sourceforge.net/jasperreports"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+        http://jasperreports.sourceforge.net/jasperreports
+        http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+        name="ContratosVencimientos"
+        pageWidth="595" pageHeight="842" columnWidth="555"
+        leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+
+    <!-- PARÁMETROS -->
+    <parameter name="PROXIMOS_TEXTO" class="java.lang.String"/>
+    <parameter name="VENCIDOS_TEXTO" class="java.lang.String"/>
+
+    <title>
+        <band height="40">
+            <staticText>
+                <reportElement x="0" y="5" width="555" height="30"/>
+                <textElement textAlignment="Center">
+                    <font size="16" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Reporte de Contratos]]></text>
+            </staticText>
+        </band>
+    </title>
+
+    <detail>
+        <band height="760">
+
+            <!-- TÍTULO 1 -->
+            <staticText>
+                <reportElement x="0" y="0" width="555" height="18"/>
+                <textElement><font isBold="true" size="13"/></textElement>
+                <text><![CDATA[Contratos que vencen el próximo mes]]></text>
+            </staticText>
+
+            <!-- TEXTO DINÁMICO 1 -->
+            <textField isStretchWithOverflow="true">
+                <reportElement x="0" y="25" width="555" height="200"/>
+                <textFieldExpression><![CDATA[$P{PROXIMOS_TEXTO}]]></textFieldExpression>
+            </textField>
+
+            <!-- TÍTULO 2 -->
+            <staticText>
+                <reportElement x="0" y="240" width="555" height="18"/>
+                <textElement><font isBold="true" size="13"/></textElement>
+                <text><![CDATA[Contratos vencidos]]></text>
+            </staticText>
+
+            <!-- TEXTO DINÁMICO 2 -->
+            <textField isStretchWithOverflow="true">
+                <reportElement x="0" y="265" width="555" height="470"/>
+                <textFieldExpression><![CDATA[$P{VENCIDOS_TEXTO}]]></textFieldExpression>
+            </textField>
+
+        </band>
+    </detail>
+
+</jasperReport>
