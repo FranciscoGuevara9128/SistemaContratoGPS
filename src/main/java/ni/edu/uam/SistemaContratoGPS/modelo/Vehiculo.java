@@ -21,6 +21,22 @@ import java.util.Collection;
 @Getter
 @Setter
 
+@Tab(
+        properties = "placa, vin, marca, modelo, anio, color, propietario",
+        defaultOrder = "anio asc"
+)
+
+@View(
+        members=
+                "datosVehiculo { " +
+                        "placa, vin; " +
+                        "marca, modelo, anio; " +
+                        "color; " +
+                        "propietario; " +
+                        "imagenes;" +
+                "}"
+)
+
 public class Vehiculo {
     @Id
     @Hidden
