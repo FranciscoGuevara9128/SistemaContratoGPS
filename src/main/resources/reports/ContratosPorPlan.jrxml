@@ -1,39 +1,145 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
-              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports
-                                  http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
-              name="ContratosPorPlan"
-              pageWidth="595" pageHeight="842" columnWidth="555"
-              leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20"
-              uuid="eeeeeeee-9999-aaaa-bbbb-cccccccccccc">
+<jasperReport
+        xmlns="http://jasperreports.sourceforge.net/jasperreports"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+        http://jasperreports.sourceforge.net/jasperreports
+        http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+        name="ContratosPorPlan"
+        pageWidth="595" pageHeight="842" columnWidth="555"
+        leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 
+    <!-- ====================================================== -->
+    <!-- SUBDATASET -->
+    <!-- ====================================================== -->
     <subDataset name="datasetPlanes">
         <field name="plan" class="java.lang.String"/>
         <field name="total" class="java.lang.Long"/>
     </subDataset>
 
+
+    <!-- ====================================================== -->
+    <!-- PARÁMETROS -->
+    <!-- ====================================================== -->
     <parameter name="PLANES" class="java.util.Collection"/>
 
-    <background>
-        <band/>
-    </background>
 
-    <title>
-        <band height="1"/>
-    </title>
+    <!-- ====================================================== -->
+    <!-- PAGE HEADER -->
+    <!-- ====================================================== -->
+    <pageHeader>
+        <band height="90">
 
+            <!-- LOGO -->
+            <image>
+                <reportElement x="0" y="5" width="80" height="60"/>
+                <imageExpression><![CDATA[
+                    getClass().getResource("/media/SISEK.png")
+                ]]></imageExpression>
+            </image>
+
+            <!-- TÍTULO -->
+            <staticText>
+                <reportElement x="100" y="5" width="350" height="30"/>
+                <textElement textAlignment="Center">
+                    <font size="16" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Contratos por Tipo de Plan]]></text>
+            </staticText>
+
+            <!-- FECHA -->
+            <textField pattern="dd/MM/yyyy HH:mm">
+                <reportElement x="400" y="50" width="155" height="20"/>
+                <textElement textAlignment="Right">
+                    <font size="9"/>
+                </textElement>
+                <textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+            </textField>
+
+            <!-- LÍNEA -->
+            <line>
+                <reportElement x="0" y="80" width="555" height="1"/>
+            </line>
+
+        </band>
+    </pageHeader>
+
+    <!-- ====================================================== -->
+    <!-- DESCRIPCIÓN -->
+    <!-- ====================================================== -->
+    <columnHeader>
+        <band height="60">
+
+            <textField isStretchWithOverflow="true">
+                <reportElement x="0" y="0" width="555" height="40"/>
+                <textElement>
+                    <font size="10"/>
+                </textElement>
+                <textFieldExpression><![CDATA[
+                    "Este reporte muestra la distribución de contratos según el tipo de plan contratado."
+                ]]></textFieldExpression>
+            </textField>
+
+            <line>
+                <reportElement x="0" y="50" width="555" height="1"/>
+            </line>
+
+        </band>
+    </columnHeader>
+
+    <!-- ====================================================== -->
+    <!-- DETAIL (VACÍO PARA ESTE TIPO DE REPORTE) -->
+    <!-- ====================================================== -->
     <detail>
         <band height="1"/>
     </detail>
 
+    <!-- ====================================================== -->
+    <!-- PIE DE PÁGINA -->
+    <!-- ====================================================== -->
+    <pageFooter>
+        <band height="60">
+
+            <textField>
+                <reportElement x="0" y="5" width="350" height="12"/>
+                <textElement><font size="8"/></textElement>
+                <textFieldExpression><![CDATA["Autor: Usuario Admin"]]></textFieldExpression>
+            </textField>
+
+            <textField>
+                <reportElement x="0" y="20" width="350" height="12"/>
+                <textElement><font size="8"/></textElement>
+                <textFieldExpression><![CDATA["Sistema: Sistema de Contratos GPS"]]></textFieldExpression>
+            </textField>
+
+            <textField>
+                <reportElement x="0" y="35" width="350" height="12"/>
+                <textElement><font size="8"/></textElement>
+                <textFieldExpression><![CDATA["Código del reporte: GPS-RPT-002"]]></textFieldExpression>
+            </textField>
+
+            <textField>
+                <reportElement x="400" y="35" width="155" height="15"/>
+                <textElement textAlignment="Right">
+                    <font size="8"/>
+                </textElement>
+                <textFieldExpression><![CDATA[
+                    "Página " + $V{PAGE_NUMBER}
+                ]]></textFieldExpression>
+            </textField>
+
+        </band>
+    </pageFooter>
+
+    <!-- ====================================================== -->
+    <!-- SUMMARY CON PIE CHART -->
+    <!-- ====================================================== -->
     <summary>
         <band height="350">
 
             <pieChart>
                 <chart>
                     <reportElement x="20" y="20" width="500" height="300"/>
-
                     <chartTitle>
                         <titleExpression><![CDATA["Contratos por Tipo de Plan"]]></titleExpression>
                     </chartTitle>
@@ -50,7 +156,6 @@
 
                     <keyExpression><![CDATA[$F{plan}]]></keyExpression>
                     <valueExpression><![CDATA[$F{total}]]></valueExpression>
-
                 </pieDataset>
 
                 <piePlot labelFormat="{0}: ({2})" legendLabelFormat="{0} ({2})">

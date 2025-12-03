@@ -5,56 +5,183 @@
         xsi:schemaLocation="
         http://jasperreports.sourceforge.net/jasperreports
         http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
-        name="ContratosVencimientos"
+        name="ContratosVencimientosSimple"
         pageWidth="595" pageHeight="842" columnWidth="555"
         leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 
     <!-- PARÁMETROS -->
     <parameter name="PROXIMOS_TEXTO" class="java.lang.String"/>
     <parameter name="VENCIDOS_TEXTO" class="java.lang.String"/>
+    <parameter name="TOTAL_POR_VENCER" class="java.lang.Integer"/>
+    <parameter name="TOTAL_VENCIDOS" class="java.lang.Integer"/>
 
-    <title>
-        <band height="40">
+    <!-- ====================================================== -->
+    <!-- PAGE HEADER -->
+    <!-- ====================================================== -->
+    <pageHeader>
+        <band height="90">
+
+            <!-- LOGO -->
+            <image>
+                <reportElement x="0" y="5" width="80" height="60"/>
+                <imageExpression><![CDATA[getClass().getResource("/media/SISEK.png")]]></imageExpression>
+            </image>
+
+            <!-- TÍTULO -->
             <staticText>
-                <reportElement x="0" y="5" width="555" height="30"/>
+                <reportElement x="100" y="5" width="350" height="30"/>
                 <textElement textAlignment="Center">
                     <font size="16" isBold="true"/>
                 </textElement>
                 <text><![CDATA[Reporte de Contratos]]></text>
             </staticText>
+
+            <!-- FECHA -->
+            <textField pattern="dd/MM/yyyy HH:mm">
+                <reportElement x="400" y="50" width="155" height="20"/>
+                <textElement textAlignment="Right">
+                    <font size="9"/>
+                </textElement>
+                <textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+            </textField>
+
+            <line>
+                <reportElement x="0" y="80" width="555" height="1"/>
+            </line>
+
         </band>
-    </title>
+    </pageHeader>
 
+    <!-- ====================================================== -->
+    <!-- DESCRIPCIÓN -->
+    <!-- ====================================================== -->
+    <columnHeader>
+        <band height="60">
+
+            <textField isStretchWithOverflow="true">
+                <reportElement x="0" y="0" width="555" height="40"/>
+                <textElement>
+                    <font size="10"/>
+                </textElement>
+                <textFieldExpression><![CDATA[
+"Este reporte resume los contratos próximos a vencer y los que ya se encuentran vencidos."
+                ]]></textFieldExpression>
+            </textField>
+
+            <line>
+                <reportElement x="0" y="50" width="555" height="1"/>
+            </line>
+
+        </band>
+    </columnHeader>
+
+    <!-- ====================================================== -->
+    <!-- CONTENIDO PRINCIPAL -->
+    <!-- ====================================================== -->
     <detail>
-        <band height="760">
+        <band height="450" splitType="Stretch">
 
-            <!-- TÍTULO 1 -->
+            <!-- SECCIÓN 1 - TÍTULO (FIJO) -->
             <staticText>
-                <reportElement x="0" y="0" width="555" height="18"/>
-                <textElement><font isBold="true" size="13"/></textElement>
-                <text><![CDATA[Contratos que vencen el próximo mes]]></text>
+                <reportElement x="0" y="0" width="555" height="20"
+                               positionType="FixRelativeToTop"/>
+                <textElement><font size="12" isBold="true"/></textElement>
+                <text><![CDATA[Contratos que Vencerán el Próximo Mes]]></text>
             </staticText>
 
-            <!-- TEXTO DINÁMICO 1 -->
+            <!-- SECCIÓN 1 - LISTA (FLOAT) -->
             <textField isStretchWithOverflow="true">
-                <reportElement x="0" y="25" width="555" height="200"/>
+                <reportElement x="0" y="25" width="555" height="20"
+                               positionType="Float"/>
                 <textFieldExpression><![CDATA[$P{PROXIMOS_TEXTO}]]></textFieldExpression>
             </textField>
 
-            <!-- TÍTULO 2 -->
+            <!-- SECCIÓN 2 - TÍTULO (FLOAT) -->
             <staticText>
-                <reportElement x="0" y="240" width="555" height="18"/>
-                <textElement><font isBold="true" size="13"/></textElement>
-                <text><![CDATA[Contratos vencidos]]></text>
+                <reportElement x="0" y="50" width="555" height="20"
+                               positionType="Float"/>
+                <textElement><font size="12" isBold="true"/></textElement>
+                <text><![CDATA[Contratos Vencidos]]></text>
             </staticText>
 
-            <!-- TEXTO DINÁMICO 2 -->
+            <!-- SECCIÓN 2 - LISTA (FLOAT) -->
             <textField isStretchWithOverflow="true">
-                <reportElement x="0" y="265" width="555" height="470"/>
+                <reportElement x="0" y="75" width="555" height="20"
+                               positionType="Float"/>
                 <textFieldExpression><![CDATA[$P{VENCIDOS_TEXTO}]]></textFieldExpression>
+            </textField>
+
+            <!-- TÍTULO DEL RESUMEN (FLOAT) -->
+            <staticText>
+                <reportElement x="0" y="100" width="555" height="20"
+                               positionType="Float"/>
+                <textElement><font size="12" isBold="true"/></textElement>
+                <text><![CDATA[Resumen General]]></text>
+            </staticText>
+
+            <!-- RESUMEN 1 -->
+            <textField>
+                <reportElement x="0" y="125" width="555" height="15"
+                               positionType="Float"/>
+                <textFieldExpression><![CDATA[
+"Total que vencerán el próximo mes: " + $P{TOTAL_POR_VENCER}
+            ]]></textFieldExpression>
+            </textField>
+
+            <!-- RESUMEN 2 -->
+            <textField>
+                <reportElement x="0" y="150" width="555" height="15"
+                               positionType="Float"/>
+                <textFieldExpression><![CDATA[
+"Total vencidos: " + $P{TOTAL_VENCIDOS}
+            ]]></textFieldExpression>
             </textField>
 
         </band>
     </detail>
+
+
+    <!-- ====================================================== -->
+    <!-- PIE DE PÁGINA -->
+    <!-- ====================================================== -->
+    <pageFooter>
+        <band height="60">
+
+            <textField>
+                <reportElement x="0" y="5" width="350" height="12"/>
+                <textElement><font size="8"/></textElement>
+                <textFieldExpression><![CDATA["Autor: Usuario Admin"]]></textFieldExpression>
+            </textField>
+
+            <textField>
+                <reportElement x="0" y="20" width="350" height="12"/>
+                <textElement><font size="8"/></textElement>
+                <textFieldExpression><![CDATA["Sistema: Sistema de Contratos GPS"]]></textFieldExpression>
+            </textField>
+
+            <textField>
+                <reportElement x="0" y="35" width="350" height="12"/>
+                <textElement><font size="8"/></textElement>
+                <textFieldExpression><![CDATA["Código del reporte: GPS-RPT-001"]]></textFieldExpression>
+            </textField>
+
+            <textField>
+                <reportElement x="400" y="35" width="155" height="15"/>
+                <textElement textAlignment="Right">
+                    <font size="8"/>
+                </textElement>
+                <textFieldExpression><![CDATA[
+"Página " + $V{PAGE_NUMBER}
+                ]]></textFieldExpression>
+            </textField>
+
+        </band>
+    </pageFooter>
+
+    <!-- ====================================================== -->
+    <!-- RESUMEN FINAL -->
+    <!-- ====================================================== -->
+    <summary>
+    </summary>
 
 </jasperReport>

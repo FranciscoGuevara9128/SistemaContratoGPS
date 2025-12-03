@@ -32,16 +32,15 @@ public class PrintReporteContratosVencimiento extends JasperReportBaseAction {
 
         // --- Fechas base ---
         LocalDate hoy = LocalDate.now();
-        LocalDate inicioMesSiguiente = hoy.plusMonths(1).withDayOfMonth(1);
-        LocalDate finMesSiguiente = inicioMesSiguiente.withDayOfMonth(inicioMesSiguiente.lengthOfMonth());
+        LocalDate inicioMesSiguiente = hoy.plusMonths(1);
 
         // --- Contratos que vencen el próximo mes ---
         List<Contrato> proximos = XPersistence.getManager()
                 .createQuery(
                         "SELECT c FROM Contrato c WHERE c.fechaFin BETWEEN :ini AND :fin",
                         Contrato.class)
-                .setParameter("ini", inicioMesSiguiente)
-                .setParameter("fin", finMesSiguiente)
+                .setParameter("ini", hoy)
+                .setParameter("fin", inicioMesSiguiente)
                 .getResultList();
 
         // --- Contratos vencidos ---
@@ -78,6 +77,8 @@ public class PrintReporteContratosVencimiento extends JasperReportBaseAction {
 
         params.put("PROXIMOS_TEXTO", textoProximos);
         params.put("VENCIDOS_TEXTO", textoVencidos);
+        params.put("TOTAL_POR_VENCER", proximos.size());
+        params.put("TOTAL_VENCIDOS", vencidos.size());
 
         return params;
     }
