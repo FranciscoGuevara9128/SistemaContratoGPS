@@ -20,6 +20,7 @@
     @Getter
     @Setter
     @NoArgsConstructor
+    @Tab(properties="cliente.tipoCliente, cliente.nombre, vehiculo.placa, dispositivoGPS.imei, fechaInicio, fechaFin, estado")
     @View(
             members=
                     "cliente;" +
