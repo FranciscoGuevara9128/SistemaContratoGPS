@@ -49,7 +49,7 @@
             <image>
                 <reportElement x="0" y="10" width="80" height="60"/>
                 <imageExpression><![CDATA[
-"C:\\Users\\frang\\OneDrive\\Documentos\\Clases\\POOI\\SistemaContratoGPS\\src\\main\\resources\\media\\SISEK.png"
+                    getClass().getResource("/media/SISEK.png")
                 ]]></imageExpression>
             </image>
 
