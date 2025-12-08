@@ -39,7 +39,7 @@ public class Usuario extends Persona{
 
     @Column(name="contrasenia", length = 20, nullable = false)
     @Required
-    @Size(min=8, max=20)
+    @Size(min=5, max=20)
     private String contrasenia;
 
     @Enumerated(EnumType.STRING)

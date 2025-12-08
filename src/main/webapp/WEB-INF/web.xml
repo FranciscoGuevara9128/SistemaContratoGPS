@@ -4,8 +4,10 @@
 
 <web-app>
   <display-name>OpenXava Application</display-name>
-  
-  <!-- Para cumplir con OWASP -->
+    <listener>
+        <listener-class>ni.edu.uam.SistemaContratoGPS.listeners.StartupCrearAdmin</listener-class>
+    </listener>
+    <!-- Para cumplir con OWASP -->
   <error-page>
     <error-code>404</error-code>
     <location>/WEB-INF/error404.html</location>

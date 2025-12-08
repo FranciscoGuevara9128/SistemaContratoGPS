@@ -24,22 +24,28 @@
     @View(
             members=
                     "cliente;" +
-                            "datosPrincipales {" +
-                            "   vehiculo, dispositivoGPS;" +
-                            "   plan, estado;" +
-                            "}" +
-                            "fechas {" +
-                            "   fechaInicio, fechaFin;" +
-                            "}" +
-                            "detalles {" +
-                            "   condiciones;" +
-                            "   observaciones;" +
-                            "}" +
-                            "auditoria {" +
-                            "   creadoPor; fechaCreacion;" +
-                            "eventos;" +
-                            "}"
+                            "datosPrincipales { " +
+                            "   vehiculo, dispositivoGPS; " +
+                            "   plan, estado; " +
+                            "} " +
+
+                            "fechas { " +
+                            "   fechaInicio; " +
+                            "   fechaFin; " +
+                            "} " +
+
+                            "detalles { " +
+                            "   condiciones; " +
+                            "   observaciones; " +
+                            "} " +
+
+                            "auditoria { " +
+                            "   creadoPor; " +
+                            "   fechaCreacion; " +
+                            "   eventos; " +
+                            "} "
     )
+
 
 
 
@@ -54,6 +60,7 @@
         @ManyToOne(fetch=FetchType.LAZY)
         @JoinColumn(name="cliente_id", nullable = false)
         @DescriptionsList(descriptionProperties = "nombre")
+        @Required
         private Cliente cliente;
 
         @ManyToOne(fetch=FetchType.LAZY)
@@ -65,6 +72,7 @@
                         "where c.activo = true" +
                         ")"
         )
+        @Required
         private Vehiculo vehiculo;
 
         @ManyToOne(fetch=FetchType.LAZY)
@@ -76,17 +84,21 @@
                         "where c.activo = true" +
                         ")"
         )
+        @Required
         private DispositivoGPS dispositivoGPS;
 
         @ManyToOne(fetch=FetchType.LAZY)
         @JoinColumn(name="plan_id", nullable = false)
         @DescriptionsList(descriptionProperties = "nombre")
+        @Required
         private Plan plan;
 
         @Column(name="fecha_inicio", nullable = false)
+        @Required
         private LocalDate fechaInicio;
 
         @Column(name="fecha_fin", nullable = false)
+        @ReadOnly
         private LocalDate fechaFin;
 
         @AssertTrue(message = "La fecha fin debe ser posterior o igual a la fecha inicio")
@@ -107,7 +119,7 @@
 
         @ManyToOne
         @JoinColumn(name="usuario_id", nullable = false)
-        @DescriptionsList(descriptionProperties = "nombre")
+        @ReadOnly
         private Usuario creadoPor;
 
         @Column(name="fecha_creacion", nullable = false)
@@ -166,13 +178,27 @@
 
         @PrePersist
         protected void onCreate() {
+
+            // Asignar usuario actual si no está asignado
+            if (this.creadoPor == null) {
+                String username = org.openxava.util.Users.getCurrent();
+
+                this.creadoPor = XPersistence.getManager()
+                        .createQuery("from Usuario u where u.nombreUsuario = :user", Usuario.class)
+                        .setParameter("user", username)
+                        .getSingleResult();
+            }
+
+            calcularFechaFin();
+
             if (this.fechaCreacion == null) {
                 this.fechaCreacion = LocalDateTime.now();
             }
             if (this.activo == null) {
                 this.activo = true;
             }
-            // ==== CAMBIAR ESTADO DEL GPS A ASIGNADO ====
+
+            // Cambiar estado del GPS
             if (this.dispositivoGPS != null) {
                 this.dispositivoGPS.setEstadoGPS(EstadoGPS.ASIGNADO);
                 XPersistence.getManager().merge(this.dispositivoGPS);
@@ -182,19 +208,22 @@
                 this.estado = EstadoContrato.ACTIVO;
             }
 
-            // Evento de creación (se guarda por cascade)
+            // EVENTO: Creación
             EventoContrato evento = new EventoContrato();
             evento.setContrato(this);
             evento.setTipoEvento(TipoEventoContrato.CREACION);
             evento.setFechaHora(LocalDateTime.now());
             evento.setDescripcion("Contrato creado");
-            evento.setUsuario(this.creadoPor);
+            evento.setUsuario(this.creadoPor); // <-- ya lo tenemos asignado
 
             this.eventos.add(evento);
         }
 
         @PreUpdate
         protected void onUpdate() {
+
+            calcularFechaFin();
+
             StringBuilder detalles = new StringBuilder();
 
             agregarCambio(detalles, "fechaInicio",
@@ -226,14 +255,19 @@
                 return;
             }
 
+            String username = org.openxava.util.Users.getCurrent();
+            Usuario usuarioActual = XPersistence.getManager()
+                    .createQuery("from Usuario u where u.nombreUsuario = :user", Usuario.class)
+                    .setParameter("user", username)
+                    .getSingleResult();
+
             EventoContrato evento = new EventoContrato();
             evento.setContrato(this);
             evento.setTipoEvento(TipoEventoContrato.ACTUALIZACION);
             evento.setFechaHora(LocalDateTime.now());
             evento.setDescripcion(detalles.toString());
-            evento.setUsuario(this.creadoPor);
+            evento.setUsuario(usuarioActual);
 
-            // Aquí SÍ usamos XPersistence, pero solo en update
             XPersistence.getManager().persist(evento);
         }
 
@@ -272,4 +306,21 @@
 
             return o.toString();
         }
+
+        private void calcularFechaFin() {
+            if (fechaInicio == null || plan == null) return;
+
+            switch (plan.getTipoPlan()) {
+                case ANUAL:
+                    fechaFin = fechaInicio.plusYears(1);
+                    break;
+                case SEMESTRAL:
+                    fechaFin = fechaInicio.plusMonths(6);
+                    break;
+                case MENSUAL:
+                    fechaFin = fechaInicio.plusMonths(1);
+                    break;
+            }
+        }
+
     }
