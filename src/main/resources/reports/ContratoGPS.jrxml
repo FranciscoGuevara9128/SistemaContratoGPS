@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport
+        xmlns="http://jasperreports.sourceforge.net/jasperreports"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports
+                            http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+        name="ContratoServicioGPS"
+        pageWidth="595" pageHeight="842" columnWidth="555"
+        leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20"
+        uuid="c111aa22-bb33-cc44-dd55-ee66778899ff">
+
+    <!-- =============================== -->
+    <!--      PARÁMETROS DEL REPORTE     -->
+    <!-- =============================== -->
+    <parameter name="cliente" class="java.lang.String"/>
+    <parameter name="cedula" class="java.lang.String"/>
+    <parameter name="vehiculoPlaca" class="java.lang.String"/>
+    <parameter name="vin" class="java.lang.String"/>
+    <parameter name="marca" class="java.lang.String"/>
+    <parameter name="modelo" class="java.lang.String"/>
+    <parameter name="imei" class="java.lang.String"/>
+    <parameter name="fechaInicio" class="java.sql.Date"/>
+    <parameter name="fechaFin" class="java.sql.Date"/>
+    <parameter name="plan" class="java.lang.String"/>
+    <parameter name="precioBase" class="java.lang.Double"/>
+    <parameter name="cuerpoContrato" class="java.lang.String"/>
+
+    <!-- =============================== -->
+    <!--              TITULO             -->
+    <!-- =============================== -->
+    <title>
+        <band height="120">
+
+            <!-- Logo -->
+            <image>
+                <reportElement x="0" y="10" width="80" height="70"/>
+                <imageExpression><![CDATA[
+                    getClass().getResource("/media/SISEK.png")
+                ]]></imageExpression>
+            </image>
+
+            <!-- Título del contrato -->
+            <textField>
+                <reportElement x="100" y="20" width="400" height="30"/>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font size="18" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA["Contrato de Servicio GPS"]]></textFieldExpression>
+            </textField>
+
+            <!-- Fecha y hora -->
+            <textField pattern="dd/MM/yyyy HH:mm">
+                <reportElement x="350" y="60" width="200" height="20"/>
+                <textElement textAlignment="Right">
+                    <font size="9"/>
+                </textElement>
+                <textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+            </textField>
+
+            <line>
+                <reportElement x="0" y="100" width="555" height="1"/>
+            </line>
+
+        </band>
+    </title>
+
+    <!-- =============================== -->
+    <!--     ENCABEZADO DE COLUMNA       -->
+    <!-- =============================== -->
+    <columnHeader>
+        <band height="40">
+            <textField isStretchWithOverflow="true">
+                <reportElement x="0" y="0" width="555" height="35"/>
+                <textElement>
+                    <font size="10"/>
+                </textElement>
+                <textFieldExpression><![CDATA[
+                    "Este documento constituye un contrato formal entre el cliente y el proveedor del servicio SISEK GPS."
+                ]]></textFieldExpression>
+            </textField>
+        </band>
+    </columnHeader>
+
+    <!-- =============================== -->
+    <!--              DETALLE            -->
+    <!-- =============================== -->
+    <detail>
+        <band height="320">
+
+            <line>
+                <reportElement x="0" y="5" width="555" height="1"/>
+            </line>
+
+            <!-- DATOS DEL CLIENTE -->
+            <staticText>
+                <reportElement x="0" y="20" width="150" height="20"/>
+                <text><![CDATA[Cliente:]]></text>
+            </staticText>
+            <textField>
+                <reportElement x="160" y="20" width="395" height="20"/>
+                <textFieldExpression><![CDATA[$P{cliente}]]></textFieldExpression>
+            </textField>
+
+            <staticText>
+                <reportElement x="0" y="45" width="150" height="20"/>
+                <text><![CDATA[Cédula:]]></text>
+            </staticText>
+            <textField>
+                <reportElement x="160" y="45" width="395" height="20"/>
+                <textFieldExpression><![CDATA[$P{cedula}]]></textFieldExpression>
+            </textField>
+
+            <!-- VEHÍCULO -->
+            <staticText>
+                <reportElement x="0" y="80" width="150" height="20"/>
+                <text><![CDATA[Placa:]]></text>
+            </staticText>
+            <textField>
+                <reportElement x="160" y="80" width="395" height="20"/>
+                <textFieldExpression><![CDATA[$P{vehiculoPlaca}]]></textFieldExpression>
+            </textField>
+
+            <staticText>
+                <reportElement x="0" y="105" width="150" height="20"/>
+                <text><![CDATA[VIN:]]></text>
+            </staticText>
+            <textField>
+                <reportElement x="160" y="105" width="395" height="20"/>
+                <textFieldExpression><![CDATA[$P{vin}]]></textFieldExpression>
+            </textField>
+
+            <staticText>
+                <reportElement x="0" y="130" width="150" height="20"/>
+                <text><![CDATA[Marca:]]></text>
+            </staticText>
+            <textField>
+                <reportElement x="160" y="130" width="395" height="20"/>
+                <textFieldExpression><![CDATA[$P{marca}]]></textFieldExpression>
+            </textField>
+
+            <staticText>
+                <reportElement x="0" y="155" width="150" height="20"/>
+                <text><![CDATA[Modelo:]]></text>
+            </staticText>
+            <textField>
+                <reportElement x="160" y="155" width="395" height="20"/>
+                <textFieldExpression><![CDATA[$P{modelo}]]></textFieldExpression>
+            </textField>
+
+            <!-- GPS -->
+            <staticText>
+                <reportElement x="0" y="190" width="150" height="20"/>
+                <text><![CDATA[IMEI GPS:]]></text>
+            </staticText>
+            <textField>
+                <reportElement x="160" y="190" width="395" height="20"/>
+                <textFieldExpression><![CDATA[$P{imei}]]></textFieldExpression>
+            </textField>
+
+            <!-- FECHAS -->
+            <staticText>
+                <reportElement x="0" y="225" width="150" height="20"/>
+                <text><![CDATA[Fecha Inicio:]]></text>
+            </staticText>
+            <textField>
+                <reportElement x="160" y="225" width="395" height="20"/>
+                <textFieldExpression><![CDATA[$P{fechaInicio}]]></textFieldExpression>
+            </textField>
+
+            <staticText>
+                <reportElement x="0" y="250" width="150" height="20"/>
+                <text><![CDATA[Fecha Fin:]]></text>
+            </staticText>
+            <textField>
+                <reportElement x="160" y="250" width="395" height="20"/>
+                <textFieldExpression><![CDATA[$P{fechaFin}]]></textFieldExpression>
+            </textField>
+
+            <!-- PLAN -->
+            <staticText>
+                <reportElement x="0" y="285" width="150" height="20"/>
+                <text><![CDATA[Plan:]]></text>
+            </staticText>
+            <textField>
+                <reportElement x="160" y="285" width="395" height="20"/>
+                <textFieldExpression><![CDATA[$P{plan}]]></textFieldExpression>
+            </textField>
+
+        </band>
+    </detail>
+
+    <!-- =============================== -->
+    <!--            FOOTER               -->
+    <!-- =============================== -->
+    <pageFooter>
+        <band height="60">
+
+            <textField>
+                <reportElement x="0" y="5" width="350" height="12"/>
+                <textElement><font size="8"/></textElement>
+                <textFieldExpression><![CDATA["Autor: Usuario Admin"]]></textFieldExpression>
+            </textField>
+
+            <textField>
+                <reportElement x="0" y="20" width="350" height="12"/>
+                <textElement><font size="8"/></textElement>
+                <textFieldExpression><![CDATA["Sistema: Sistema de Contratos GPS"]]></textFieldExpression>
+            </textField>
+
+            <textField>
+                <reportElement x="0" y="35" width="350" height="12"/>
+                <textElement><font size="8"/></textElement>
+                <textFieldExpression><![CDATA["Código del contrato: C-01-001"]]></textFieldExpression>
+            </textField>
+
+            <textField>
+                <reportElement x="400" y="35" width="155" height="15"/>
+                <textElement textAlignment="Right">
+                    <font size="8"/>
+                </textElement>
+                <textFieldExpression><![CDATA[
+                    "Página " + $V{PAGE_NUMBER} + " de " + $V{PAGE_COUNT}
+                ]]></textFieldExpression>
+            </textField>
+
+        </band>
+    </pageFooter>
+
+    <!-- =============================== -->
+    <!--             FIRMAS              -->
+    <!-- =============================== -->
+    <summary>
+        <band height="650">
+
+            <staticText>
+                <reportElement x="0" y="0" width="555" height="20"/>
+                <text><![CDATA[Cuerpo del Contrato:]]></text>
+            </staticText>
+
+            <textField textAdjust="StretchHeight">
+                <reportElement x="0" y="25" width="555" height="300" positionType="Float"/>
+                <textElement><font size="10"/></textElement>
+                <textFieldExpression><![CDATA[$P{cuerpoContrato}]]></textFieldExpression>
+            </textField>
+
+            <staticText>
+                <reportElement x="0" y="330" width="10" height="30" positionType="Float"/>
+                <text><![CDATA[""]]></text>
+            </staticText>
+
+            <!-- FIRMA CLIENTE -->
+            <line>
+                <reportElement x="40" y="370" width="200" height="1" positionType="Float"/>
+            </line>
+            <staticText>
+                <reportElement x="40" y="375" width="200" height="20" positionType="Float"/>
+                <text><![CDATA[Firma del Cliente]]></text>
+            </staticText>
+
+            <!-- FIRMA PROVEEDOR -->
+            <line>
+                <reportElement x="315" y="370" width="200" height="1" positionType="Float"/>
+            </line>
+            <staticText>
+                <reportElement x="315" y="375" width="200" height="20" positionType="Float"/>
+                <text><![CDATA[Firma del Proveedor]]></text>
+            </staticText>
+
+        </band>
+    </summary>
+
+</jasperReport>

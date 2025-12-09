@@ -19,6 +19,8 @@
                 clase="ni.edu.uam.SistemaContratoGPS.actions.PrintContratosPorPlan"/>
         <accion nombre="Top 10 Clientes" icono="account" modo = "list"
                 clase="ni.edu.uam.SistemaContratoGPS.actions.PrintTop10ClientesContratos"/>
+        <accion nombre="Imprimir Contrato" icono="printer" modo="detail"
+                clase="ni.edu.uam.SistemaContratoGPS.actions.ImprimirContratoAction"/>
     </controlador>
 
 </controladores>

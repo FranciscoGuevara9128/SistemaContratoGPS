@@ -93,7 +93,6 @@
 			<version>5.0.5.java8</version>
 		</dependency>
 		-->
-		
 	</dependencies>
 
 	<build>
